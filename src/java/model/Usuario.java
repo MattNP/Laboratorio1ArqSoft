@@ -10,7 +10,7 @@ package model;
  * @author jorgel.diaz
  */
 public class Usuario {
-    
-    
+    private String firstName;
+    private String lastName;
     
 }
