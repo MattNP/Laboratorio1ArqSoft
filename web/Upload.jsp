@@ -29,25 +29,46 @@
                     </tr>
                     <tr>
                         <td><br>Apellidos: </td>
-                    
-                    <td>
-                        <br><input type="text" name="lastName" class="form-control" placeholder="Apellidos"size="50"/></td>
+
+                        <td>
+                            <br><input type="text" name="lastName" class="form-control" placeholder="Apellidos"size="50"/></td>
                     </tr>
-                    
+
                     <tr>                        
                         <td><br>Edad:</td>
                     <br>
                     <td>
                         <br><input type="text" name="age" class="form-control" placeholder="Edad"size="50"/></td>
                     </tr>
-                    
+
                     <tr>                        
                         <td><br>Estatura:</td>
-                    <br>
+                    
                     <td>
-                        <br><input type="text" name="size" class="form-control" placeholder="Estatura"size="50"/></td>
+                        <br><input type="text" name="height" class="form-control" placeholder="Estatura (cm)"size="50"/></td>
                     </tr>
-
+                    
+                    <tr>                        
+                        <td><br>Peso:</td>
+                    
+                    <td>
+                        <br><input type="text" name="weight" class="form-control" placeholder="Peso (kg)"size="50"/></td>
+                    </tr>
+                    
+                    <tr>                        
+                        <td><br>Posición de juego:</td>
+                    
+                    <td>
+                        <br><input type="text" name="position" class="form-control" placeholder="Posición (Arquero, Defensa, Volante, Delantero)"size="50"/></td>
+                    </tr>
+                    
+                    <tr>                        
+                        <td><br>Fecha de nacimiento:</td>
+                    
+                    <td>
+                        <br><input type="date" name="born" class="form-control" placeholder="Fecha de nacimiento"size="50"/></td>
+                    </tr>
+                    
                     <tr>
                         <td><br>Foto:</td>
 

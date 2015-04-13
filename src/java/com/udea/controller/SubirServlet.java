@@ -12,6 +12,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -42,18 +46,22 @@ public class SubirServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
-        
+            throws ServletException, IOException, SQLException, ParseException {
         response.setContentType("text/html;charset=UTF-8");
+ 
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String age = request.getParameter("age");
-        String size = request.getParameter("size");
-
+        String weight = request.getParameter("weight");
+        String height = request.getParameter("height");
+        String position = request.getParameter("position");
+        String born = request.getParameter("born");
+        
         InputStream inputStream = null;
 
         // Obtener el archivo en partes a traves de una petición Multipart
         Part filePart = request.getPart("photo");
+        
         if (filePart != null) {
 
             // Información para Debug
@@ -74,17 +82,24 @@ public class SubirServlet extends HttpServlet {
             conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
 
             // Construir un estamento en SQL
-            String sql = "INSERT INTO contacts(first_name,last_name,photo,age,size)values(?,?,?,?,?)";
+            String sql = "INSERT INTO contacts(first_name,last_name,age,height,weight,position,born,photo)values(?,?,?,?,?,?,?,?)";
             PreparedStatement statement = conn.prepareStatement(sql);
+            
             statement.setString(1, firstName);
             statement.setString(2, lastName);
+            statement.setString(3, age);                       
+            statement.setString(4, height);
+            statement.setString(5, weight);
+            statement.setString(6, position);
+            statement.setString(7, born);
+            
             
             if (inputStream != null) {
-                statement.setBlob(3, inputStream);
+                statement.setBlob(8, inputStream);
             }
+
             
-            statement.setString(4, age);
-            statement.setString(5, size);
+            
 
             // Enviar el estamento al servidor de BD
             int row = statement.executeUpdate();
@@ -131,6 +146,8 @@ public class SubirServlet extends HttpServlet {
             processRequest(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(SubirServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(SubirServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -148,6 +165,8 @@ public class SubirServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
+            Logger.getLogger(SubirServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(SubirServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
