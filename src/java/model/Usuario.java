@@ -12,5 +12,6 @@ package model;
 public class Usuario {
     private String firstName;
     private String lastName;
+    private String age;
     
 }
