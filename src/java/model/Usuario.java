@@ -13,5 +13,9 @@ public class Usuario {
     private String firstName;
     private String lastName;
     private String age;
+    private String position;
+    private String weight;
+    private String height;
+    private String born;
     
 }
