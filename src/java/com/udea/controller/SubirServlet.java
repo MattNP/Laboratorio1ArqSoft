@@ -7,15 +7,12 @@ package com.udea.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -48,7 +45,7 @@ public class SubirServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ParseException {
         response.setContentType("text/html;charset=UTF-8");
- 
+
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String age = request.getParameter("age");
@@ -56,12 +53,75 @@ public class SubirServlet extends HttpServlet {
         String height = request.getParameter("height");
         String position = request.getParameter("position");
         String born = request.getParameter("born");
+
+        if (validarString(firstName) == false) {
+            // Setear el mensaje en el ambito del Request
+            request.setAttribute("Message", "El atributo Nombre contiene errores por favor corregirlos");
+
+            // Forward a la pagina del mensaje
+            getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
+            return;
+        }
         
+        if (validarString(lastName) == false) {
+            // Setear el mensaje en el ambito del Request
+            request.setAttribute("Message", "El atributo Apellido contiene errores por favor corregirlos");
+
+            // Forward a la pagina del mensaje
+            getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
+            return;
+        }
+        
+        if (validarNumero(age) == false) {
+            // Setear el mensaje en el ambito del Request
+            request.setAttribute("Message", "El atributo Edad contiene errores por favor corregirlos");
+
+            // Forward a la pagina del mensaje
+            getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
+            return;
+        }
+        
+        if (validarNumero(weight) == false) {
+            // Setear el mensaje en el ambito del Request
+            request.setAttribute("Message", "El atributo Peso contiene errores por favor corregirlos");
+
+            // Forward a la pagina del mensaje
+            getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
+            return;
+        }
+        
+        if (validarNumero(height) == false) {
+            // Setear el mensaje en el ambito del Request
+            request.setAttribute("Message", "El atributo Estatura contiene errores por favor corregirlos");
+
+            // Forward a la pagina del mensaje
+            getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
+            return;
+        }
+        
+        if (validarString(position) == false) {
+            // Setear el mensaje en el ambito del Request
+            request.setAttribute("Message", "El atributo Posicion contiene errores por favor corregirlos");
+
+            // Forward a la pagina del mensaje
+            getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
+            return;
+        }
+        
+        /*if (validarFecha(born) == false) {
+            // Setear el mensaje en el ambito del Request
+            request.setAttribute("Message", "El atributo Fecha Nacimiento contiene errores por favor corregirlos");
+
+            // Forward a la pagina del mensaje
+            getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
+            return;
+        }*/
+
         InputStream inputStream = null;
 
         // Obtener el archivo en partes a traves de una petición Multipart
         Part filePart = request.getPart("photo");
-        
+
         if (filePart != null) {
 
             // Información para Debug
@@ -84,22 +144,18 @@ public class SubirServlet extends HttpServlet {
             // Construir un estamento en SQL
             String sql = "INSERT INTO contacts(first_name,last_name,age,height,weight,position,born,photo)values(?,?,?,?,?,?,?,?)";
             PreparedStatement statement = conn.prepareStatement(sql);
-            
+
             statement.setString(1, firstName);
             statement.setString(2, lastName);
-            statement.setString(3, age);                       
+            statement.setString(3, age);
             statement.setString(4, height);
             statement.setString(5, weight);
             statement.setString(6, position);
             statement.setString(7, born);
-            
-            
+
             if (inputStream != null) {
                 statement.setBlob(8, inputStream);
             }
-
-            
-            
 
             // Enviar el estamento al servidor de BD
             int row = statement.executeUpdate();
@@ -110,24 +166,112 @@ public class SubirServlet extends HttpServlet {
             message = "ERROR: " + ex.getMessage();
             ex.printStackTrace();
         } finally {
-            
+
             // Cerramos la conexion a la BD
             if (conn != null) {
                 try {
                     conn.close();
-                } catch (SQLException ex){
+                } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
             }
         }
         // Setear el mensaje en el ambito del Request
         request.setAttribute("Message", message);
-        
+
         // Forward a la pagina del mensaje
         getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
-        
-        
 
+    }
+
+    private boolean validarString(String date) {
+        char c;
+        for (int i = 0; i < date.length(); i++) {
+            c = date.charAt(i);
+            if (Character.isLetter(c) == false) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean validarNumero(String date) {
+        char c;
+        for (int i = 0; i < date.length(); i++) {
+            c = date.charAt(i);
+            if (Character.isDigit(c) == false) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean validarFecha(String date) {
+        if (date.length() != 10) {
+            return false;
+        }
+        if (("-".equals("" + date.charAt(4)) == false) || ("-".equals("" + date.charAt(7)) == false)) {
+            return false;
+        }
+        String[] dateArray = date.split("-");
+        String year = dateArray[0];
+        String month = dateArray[1];
+        String day = dateArray[2];
+        if (year.length() != 4) {
+            return false;
+        }
+        char y;
+        for (int i = 0; i < 4; i++) {
+            y = year.charAt(i);
+            if (Character.isDigit(y) == false) {
+                return false;
+            }
+        }
+        int yearInt = Integer.parseInt(year);
+        if ((yearInt >= 1900 && yearInt <= Calendar.YEAR) == false) {
+            return false;
+        }
+        if (month.length() != 2) {
+            return false;
+        }
+        char m;
+        for (int i = 0; i < 2; i++) {
+            m = month.charAt(i);
+            if (Character.isDigit(m) == false) {
+                return false;
+            }
+        }
+        int monthInt = Integer.parseInt(month);
+        if ((monthInt >= 1 && monthInt <= 12) == false) {
+            return false;
+        }
+        if (yearInt == Calendar.YEAR && monthInt > Calendar.MONTH) {
+            return false;
+        }
+        if (day.length() != 2) {
+            return false;
+        }
+        char d;
+        for (int i = 0; i < 2; i++) {
+            d = day.charAt(i);
+            if (Character.isDigit(d) == false) {
+                return false;
+            }
+        }
+        int dayInt = Integer.parseInt(day);
+        if (monthInt == 2 && (dayInt < 1 || dayInt > 28)) {
+            return false;
+        }
+        if ((monthInt == 4 || monthInt == 6 || monthInt == 9 || monthInt == 11) && (dayInt < 01 || dayInt > 11)) {
+            return false;
+        }
+        if (dayInt < 0 && dayInt > 31) {
+            return false;
+        }
+        if (yearInt == Calendar.YEAR && monthInt > Calendar.MONTH && dayInt > Calendar.DAY_OF_MONTH) {
+            return false;
+        }
+        return true;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
