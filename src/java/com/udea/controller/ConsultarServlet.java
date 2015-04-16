@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +33,7 @@ import javax.servlet.http.Part;
 @MultipartConfig(maxFileSize = 16177215)
 public class ConsultarServlet extends HttpServlet {
 
-    private String dbURL = "jdbc:mysql://localhost:3306/Archivo";
+    private String dbURL = "jdbc:mysql://localhost:3306/archivo";
     private String dbUser = "root";
     private String dbPass = "";
 
@@ -49,50 +50,53 @@ public class ConsultarServlet extends HttpServlet {
             throws ServletException, IOException, SQLException, ParseException {
         response.setContentType("text/html;charset=UTF-8");
 
-        String firstName = request.getParameter("firstName");
+        String firstName = request.getParameter("firstName").toUpperCase();
         /*String lastName = request.getParameter("lastName");
          String age = request.getParameter("age");
          String weight = request.getParameter("weight");
          String height = request.getParameter("height");
          String position = request.getParameter("position");*/
 
-        InputStream inputStream = null;
+        //InputStream inputStream = null;
         /*
-        // Obtener el archivo en partes a traves de una petición Multipart
-        Part filePart = request.getPart("photo");
+         // Obtener el archivo en partes a traves de una petición Multipart
+         Part filePart = request.getPart("photo");
 
-        if (filePart != null) {
+         if (filePart != null) {
 
-            // Información para Debug
-            System.out.println(filePart.getName());
-            System.out.println(filePart.getSize());
-            System.out.println(filePart.getContentType());
+         // Información para Debug
+         System.out.println(filePart.getName());
+         System.out.println(filePart.getSize());
+         System.out.println(filePart.getContentType());
 
-            // Obtener el InputStream del Archivo Subido
-            inputStream = filePart.getInputStream();
-        }*/
-
+         // Obtener el InputStream del Archivo Subido
+         inputStream = filePart.getInputStream();
+         }*/
         Connection conn = null;
-        String message = null;
+        String message = "";
 
         try {
             // Conectar la BD
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
-
             /*
              // Construir un estamento en SQL
              String sql = "INSERT INTO contacts(first_name,last_name,age,height,weight,position,photo)values(?,?,?,?,?,?,?)";          
              PreparedStatement statement = conn.prepareStatement(sql);
              */
-            String selectSQL = "SELECT(first_name,last_name,age,height,weight,position,photo)FROM contacts WHERE first_name=?";
+            String selectSQL = "SELECT first_name,last_name,age,height,weight,position,born,photo FROM contacts WHERE first_name=?";
             PreparedStatement pStatement = conn.prepareStatement(selectSQL);
             pStatement.setString(1, firstName);
-            ResultSet rs = pStatement.executeQuery(selectSQL);
+            ResultSet rs = pStatement.executeQuery();
+            ArrayList lista = new ArrayList();
             while (rs.next()) {
                 for (int x = 1; x <= rs.getMetaData().getColumnCount(); x++) {
+                    lista.add(rs.getString(x));
                     System.out.print(rs.getString(x) + "\t");
                 }
+            }
+            for (int i = 0; i < lista.size(); i++) {
+                message = message + lista.get(i) +  ",";
             }
             /*
             

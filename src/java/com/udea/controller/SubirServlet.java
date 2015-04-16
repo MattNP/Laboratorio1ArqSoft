@@ -47,12 +47,12 @@ public class SubirServlet extends HttpServlet {
             throws ServletException, IOException, SQLException, ParseException {
         response.setContentType("text/html;charset=UTF-8");
 
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
+        String firstName = request.getParameter("firstName").toUpperCase();
+        String lastName = request.getParameter("lastName").toUpperCase();
         String age = request.getParameter("age");
         String weight = request.getParameter("weight");
         String height = request.getParameter("height");
-        String position = request.getParameter("position");
+        String position = request.getParameter("position").toUpperCase();
         String born = request.getParameter("born");
 
         if (validarString(firstName) == false) {
@@ -188,7 +188,7 @@ public class SubirServlet extends HttpServlet {
         char c;
         for (int i = 0; i < date.length(); i++) {
             c = date.charAt(i);
-            if (Character.isLetter(c) == false) {
+            if (((Character.isLetter(c) || " ".equals(""+c))) == false) {
                 return false;
             }
         }
@@ -270,15 +270,15 @@ public class SubirServlet extends HttpServlet {
         }
         int dayInt = Integer.parseInt(day);
         System.out.println("Dia " + dayInt);
-        if (monthInt == 1 && (dayInt < 1 || dayInt > 28)) {
+        if (monthInt == 2 && (dayInt < 1 || dayInt > 28)) {
             System.out.println("Febrero");
             return false;
         }
-        if ((monthInt == 3 || monthInt == 5 || monthInt == 8 || monthInt == 10) && (dayInt < 1 || dayInt > 11)) {
+        if ((monthInt == 4 || monthInt == 6 || monthInt == 9 || monthInt == 11) && (dayInt < 1 || dayInt > 30)) {
             System.out.println("30 dias");
             return false;
         }
-        if (dayInt < 0 && dayInt > 31) {
+        if (dayInt < 0 || dayInt > 31) {
             System.out.println("31 dias");
             return false;
         }
