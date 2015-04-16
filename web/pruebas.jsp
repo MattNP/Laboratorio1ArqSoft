@@ -7,22 +7,39 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>        
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Ejemplos JSP</title>
+    <head>  
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="style.css">
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <title>CONSULTA</title>
 </head>
 <body>
-    <H1>Ejemplos de expresiones</H1>
-    <%-- Mostrar la fecha y hora actual --%>
-    <%= new java.util.Date().toString() %><br>
+    <center>
+        <div class="container well">
+            <h1>CONSULTA</h1>
+            <form method="post" action="ConsultarServlet" enctype="multipart/form-data">
+                <table border="0">
+                    <tr>
+                        <td>Nombres: </td>
+                        <td><input type="text" name="firstName" class="form-control" placeholder="Nombres"size="50"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <br>
+                            <input class="btn btn-primary btn-block" type="submit" value="CONSULTAR">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <br>
 
-    <%-- Convertir a mayúsculas un String --%>
-    <%= "Pasar a mayúsculas".toUpperCase() %><br>
 
-    <%-- Resultado de una expresión aritmética --%>
-    <%= (5+2)/(float)3 %><br>
-
-    <%-- Generar un número aleatorio --%>
-    <%= new java.util.Random().nextInt(100) %>
+        </div>
+    </center>
 </body>
 </html>

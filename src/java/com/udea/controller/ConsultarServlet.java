@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Calendar;
@@ -49,14 +50,14 @@ public class ConsultarServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        String age = request.getParameter("age");
-        String weight = request.getParameter("weight");
-        String height = request.getParameter("height");
-        String position = request.getParameter("position");
+        /*String lastName = request.getParameter("lastName");
+         String age = request.getParameter("age");
+         String weight = request.getParameter("weight");
+         String height = request.getParameter("height");
+         String position = request.getParameter("position");*/
 
         InputStream inputStream = null;
-
+        /*
         // Obtener el archivo en partes a traves de una petición Multipart
         Part filePart = request.getPart("photo");
 
@@ -69,7 +70,7 @@ public class ConsultarServlet extends HttpServlet {
 
             // Obtener el InputStream del Archivo Subido
             inputStream = filePart.getInputStream();
-        }
+        }*/
 
         Connection conn = null;
         String message = null;
@@ -79,37 +80,42 @@ public class ConsultarServlet extends HttpServlet {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
 
-            // Construir un estamento en SQL
-            String sql = "INSERT INTO contacts(first_name,last_name,age,height,weight,position,photo)values(?,?,?,?,?,?,?)";          
-            PreparedStatement statement = conn.prepareStatement(sql);
+            /*
+             // Construir un estamento en SQL
+             String sql = "INSERT INTO contacts(first_name,last_name,age,height,weight,position,photo)values(?,?,?,?,?,?,?)";          
+             PreparedStatement statement = conn.prepareStatement(sql);
+             */
+            String selectSQL = "SELECT(first_name,last_name,age,height,weight,position,photo)FROM contacts WHERE first_name=?";
+            PreparedStatement pStatement = conn.prepareStatement(selectSQL);
+            pStatement.setString(1, firstName);
+            ResultSet rs = pStatement.executeQuery(selectSQL);
+            while (rs.next()) {
+                for (int x = 1; x <= rs.getMetaData().getColumnCount(); x++) {
+                    System.out.print(rs.getString(x) + "\t");
+                }
+            }
+            /*
+            
+             */
 
             /*
-             String selectSQL = "SELECT(first_name,last_name,age,height,weight,position,photo)FROM contacts WHERE first_name=?";
-             PreparedStatement pStatement = dbConnection.prepareStatement(selectSQL);
-             pStatement.setInt(1, firstName);
-             ResultSet rs = pStatement.executeQuery(selectSQL);
-             while (rs.next()) {
-             String firstName = rs.getString("USER_ID");
-             String username = rs.getString("USERNAME");	
-             }
-             */
             
-            statement.setString(1, firstName);
-            statement.setString(2, lastName);
-            statement.setString(3, age);
-            statement.setString(4, height);
-            statement.setString(5, weight);
-            statement.setString(6, position);
+             statement.setString(1, firstName);
+             statement.setString(2, lastName);
+             statement.setString(3, age);
+             statement.setString(4, height);
+             statement.setString(5, weight);
+             statement.setString(6, position);
 
-            if (inputStream != null) {
-                statement.setBlob(7, inputStream);
-            }
+             if (inputStream != null) {
+             statement.setBlob(7, inputStream);
+             }
 
-            // Enviar el estamento al servidor de BD
-            int row = statement.executeUpdate();
-            if (row > 0) {
-                message = "TODO BIEN, SIN ERRORES";
-            }
+             // Enviar el estamento al servidor de BD
+             int row = pStatement.executeUpdate();
+             if (row > 0) {
+             message = "TODO BIEN, SIN ERRORES";
+             }*/
         } catch (SQLException ex) {
             message = "ERROR: " + ex.getMessage();
             ex.printStackTrace();

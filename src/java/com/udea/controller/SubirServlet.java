@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -29,7 +30,7 @@ import javax.servlet.http.Part;
 @MultipartConfig(maxFileSize = 16177215)
 public class SubirServlet extends HttpServlet {
 
-    private String dbURL = "jdbc:mysql://localhost:3306/Archivo";
+    private String dbURL = "jdbc:mysql://localhost:3306/archivo";
     private String dbUser = "root";
     private String dbPass = "";
 
@@ -62,7 +63,7 @@ public class SubirServlet extends HttpServlet {
             getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
             return;
         }
-        
+
         if (validarString(lastName) == false) {
             // Setear el mensaje en el ambito del Request
             request.setAttribute("Message", "El atributo Apellido contiene errores por favor corregirlos");
@@ -71,7 +72,7 @@ public class SubirServlet extends HttpServlet {
             getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
             return;
         }
-        
+
         if (validarNumero(age) == false) {
             // Setear el mensaje en el ambito del Request
             request.setAttribute("Message", "El atributo Edad contiene errores por favor corregirlos");
@@ -80,7 +81,7 @@ public class SubirServlet extends HttpServlet {
             getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
             return;
         }
-        
+
         if (validarNumero(weight) == false) {
             // Setear el mensaje en el ambito del Request
             request.setAttribute("Message", "El atributo Peso contiene errores por favor corregirlos");
@@ -89,7 +90,7 @@ public class SubirServlet extends HttpServlet {
             getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
             return;
         }
-        
+
         if (validarNumero(height) == false) {
             // Setear el mensaje en el ambito del Request
             request.setAttribute("Message", "El atributo Estatura contiene errores por favor corregirlos");
@@ -98,7 +99,7 @@ public class SubirServlet extends HttpServlet {
             getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
             return;
         }
-        
+
         if (validarString(position) == false) {
             // Setear el mensaje en el ambito del Request
             request.setAttribute("Message", "El atributo Posicion contiene errores por favor corregirlos");
@@ -107,16 +108,15 @@ public class SubirServlet extends HttpServlet {
             getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
             return;
         }
-        
-        /*if (validarFecha(born) == false) {
-            // Setear el mensaje en el ambito del Request
-            request.setAttribute("Message", "El atributo Fecha Nacimiento contiene errores por favor corregirlos");
 
-            // Forward a la pagina del mensaje
-            getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
-            return;
-        }*/
+        if (validarFecha(born) == false) {
+         // Setear el mensaje en el ambito del Request
+         request.setAttribute("Message", "El atributo Fecha Nacimiento contiene errores por favor corregirlos");
 
+         // Forward a la pagina del mensaje
+         getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
+         return;
+         }
         InputStream inputStream = null;
 
         // Obtener el archivo en partes a traves de una petición Multipart
@@ -208,32 +208,42 @@ public class SubirServlet extends HttpServlet {
 
     private boolean validarFecha(String date) {
         if (date.length() != 10) {
+            System.out.println("El tamaño de la fecha es diferente de 10");
             return false;
         }
         if (("-".equals("" + date.charAt(4)) == false) || ("-".equals("" + date.charAt(7)) == false)) {
+            System.out.println("Error en guiones");
             return false;
         }
         String[] dateArray = date.split("-");
         String year = dateArray[0];
         String month = dateArray[1];
         String day = dateArray[2];
-        if (year.length() != 4) {
-            return false;
-        }
+        System.out.println("Año " + year);
+        System.out.println("Mes " + month);
+        System.out.println("Dia " + day);
+        /*if (year.length() != 4) {
+         System.out.println("Tamaño del año diferente de cero");
+         return false;
+         }*/
         char y;
         for (int i = 0; i < 4; i++) {
             y = year.charAt(i);
+            System.out.println(y);
             if (Character.isDigit(y) == false) {
+                System.out.println("El caracter " + y + " no es un digito");
                 return false;
             }
         }
         int yearInt = Integer.parseInt(year);
-        if ((yearInt >= 1900 && yearInt <= Calendar.YEAR) == false) {
+        Calendar today = new GregorianCalendar();
+        if (yearInt < 1900 || yearInt > today.get(Calendar.YEAR)) {
+            System.out.println("El año no está en el intervalo");
             return false;
         }
-        if (month.length() != 2) {
-            return false;
-        }
+        /*if (month.length() != 2) {
+         return false;
+         }*/
         char m;
         for (int i = 0; i < 2; i++) {
             m = month.charAt(i);
@@ -245,12 +255,12 @@ public class SubirServlet extends HttpServlet {
         if ((monthInt >= 1 && monthInt <= 12) == false) {
             return false;
         }
-        if (yearInt == Calendar.YEAR && monthInt > Calendar.MONTH) {
+        if (yearInt == today.get(Calendar.YEAR) && monthInt > (today.get(Calendar.MONTH) + 1)) {
             return false;
         }
-        if (day.length() != 2) {
-            return false;
-        }
+        /*if (day.length() != 2) {
+         return false;
+         }*/
         char d;
         for (int i = 0; i < 2; i++) {
             d = day.charAt(i);
@@ -259,16 +269,21 @@ public class SubirServlet extends HttpServlet {
             }
         }
         int dayInt = Integer.parseInt(day);
-        if (monthInt == 2 && (dayInt < 1 || dayInt > 28)) {
+        System.out.println("Dia " + dayInt);
+        if (monthInt == 1 && (dayInt < 1 || dayInt > 28)) {
+            System.out.println("Febrero");
             return false;
         }
-        if ((monthInt == 4 || monthInt == 6 || monthInt == 9 || monthInt == 11) && (dayInt < 01 || dayInt > 11)) {
+        if ((monthInt == 3 || monthInt == 5 || monthInt == 8 || monthInt == 10) && (dayInt < 1 || dayInt > 11)) {
+            System.out.println("30 dias");
             return false;
         }
         if (dayInt < 0 && dayInt > 31) {
+            System.out.println("31 dias");
             return false;
         }
-        if (yearInt == Calendar.YEAR && monthInt > Calendar.MONTH && dayInt > Calendar.DAY_OF_MONTH) {
+        System.out.println(dayInt == today.get(Calendar.DAY_OF_MONTH));
+        if (yearInt == today.get(Calendar.YEAR) && monthInt == (today.get(Calendar.MONTH) + 1) && dayInt > today.get(Calendar.DAY_OF_MONTH)) {
             return false;
         }
         return true;
