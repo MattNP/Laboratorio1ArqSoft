@@ -1,9 +1,11 @@
+<%-- 
+    Document   : codigo
+    Created on : 17/04/2015, 05:02:29 PM
+    Author     : jedisson.tapias
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -39,42 +41,23 @@ and open the template in the editor.
       
                 <div style=" background-image: url(Resources/Contenido.jpg);position:relative; color: black;width: 49%; float: left;height:100%; ">
                     <h2>Titulo</h2>
-                    <p>Parrafo..</p>
-                    <p>Parrafo..</p>
+                    <p>Ingresar codigo de servlet #1</p>
+                    <p>Ingresar codigo de servlet #2<</p>
                 </div> 
         
-                <div  style="position:relative; color: #FF00FF;background: rgba(255, 255, 255, .5); width: 25%;float: left;height:100%;">
+                <div  style="position:relative; color: black;background: rgba(255, 255, 255, .5); width: 25%;float: left;height:100%;">
                     <br>
                     <b><Font size="4" color="Black">DESARROLLADORES</Font></b>                   
                     <br>
                     <Font size="4" color="black"><p><u><b>Back-end</b></u><br>>>Mateo Noreña</p></Font>
                     <Font size="4" color="black" ><p><u><b>Middle-end</b></u><br>>>Esteban Cataño<br>>>Jorge Diaz</p></Font>
                     <Font size="4" color="black" ><p><u><b>Front-end</b></u><br>>>John Tapias</p></Font>
-
+                    
                 </div>  
                 <br><br><br>
                 <Font color="white"> <marquee>_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-</marquee></Font>
-                </div>
             </div>
             
         </div>
     </body> 
 </html>
-    <!--
-    <body>
-<div style="width:100px;">
-<div bgcolor="green" align="left" style="border:1px solid red;background:black;color:white;">Hello</div>
-<div align="right" style="border:1px solid green;">World</div>
-</div>
-</body>
-    ///------
- <body>   
-    <div style="width: 500px;">
- <div style="float: left; width: 200px;">Left Stuff</div>
- <div style="float: left; width: 100px;">Middle Stuff</div>
- <div style="float: left; width: 200px;">Right Stuff</div>
- <br style="clear: left;" />
-</div>
- </body>
- -->
-

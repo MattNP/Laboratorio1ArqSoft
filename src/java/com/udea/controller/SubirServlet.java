@@ -30,7 +30,7 @@ import javax.servlet.http.Part;
 @MultipartConfig(maxFileSize = 16177215)
 public class SubirServlet extends HttpServlet {
 
-    private String dbURL = "jdbc:mysql://localhost:3306/archivo";
+    private String dbURL = "jdbc:mysql://localhost:3306/Archivo";
     private String dbUser = "root";
     private String dbPass = "";
 
@@ -60,7 +60,7 @@ public class SubirServlet extends HttpServlet {
             request.setAttribute("Message", "El atributo Nombre contiene errores por favor corregirlos");
 
             // Forward a la pagina del mensaje
-            getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/mensajeIngreso.jsp").forward(request, response);
             return;
         }
 
@@ -69,7 +69,7 @@ public class SubirServlet extends HttpServlet {
             request.setAttribute("Message", "El atributo Apellido contiene errores por favor corregirlos");
 
             // Forward a la pagina del mensaje
-            getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/mensajeIngreso.jsp").forward(request, response);
             return;
         }
 
@@ -78,7 +78,7 @@ public class SubirServlet extends HttpServlet {
             request.setAttribute("Message", "El atributo Edad contiene errores por favor corregirlos");
 
             // Forward a la pagina del mensaje
-            getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/mensajeIngreso.jsp").forward(request, response);
             return;
         }
 
@@ -87,7 +87,7 @@ public class SubirServlet extends HttpServlet {
             request.setAttribute("Message", "El atributo Peso contiene errores por favor corregirlos");
 
             // Forward a la pagina del mensaje
-            getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/mensajeIngreso.jsp").forward(request, response);
             return;
         }
 
@@ -96,7 +96,7 @@ public class SubirServlet extends HttpServlet {
             request.setAttribute("Message", "El atributo Estatura contiene errores por favor corregirlos");
 
             // Forward a la pagina del mensaje
-            getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/mensajeIngreso.jsp").forward(request, response);
             return;
         }
 
@@ -105,7 +105,7 @@ public class SubirServlet extends HttpServlet {
             request.setAttribute("Message", "El atributo Posicion contiene errores por favor corregirlos");
 
             // Forward a la pagina del mensaje
-            getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/mensajeIngreso.jsp").forward(request, response);
             return;
         }
 
@@ -114,7 +114,7 @@ public class SubirServlet extends HttpServlet {
          request.setAttribute("Message", "El atributo Fecha Nacimiento contiene errores por favor corregirlos");
 
          // Forward a la pagina del mensaje
-         getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
+         getServletContext().getRequestDispatcher("/mensajeIngreso.jsp").forward(request, response);
          return;
          }
         InputStream inputStream = null;
@@ -180,7 +180,7 @@ public class SubirServlet extends HttpServlet {
         request.setAttribute("Message", message);
 
         // Forward a la pagina del mensaje
-        getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/mensajeIngreso.jsp").forward(request, response);
 
     }
 

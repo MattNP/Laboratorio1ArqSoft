@@ -33,7 +33,7 @@ import javax.servlet.http.Part;
 @MultipartConfig(maxFileSize = 16177215)
 public class ConsultarServlet extends HttpServlet {
 
-    private String dbURL = "jdbc:mysql://localhost:3306/archivo";
+    private String dbURL = "jdbc:mysql://localhost:3306/Archivo";//Cambie archivo por Archivo
     private String dbUser = "root";
     private String dbPass = "";
 
@@ -138,7 +138,7 @@ public class ConsultarServlet extends HttpServlet {
         request.setAttribute("Message", message);
 
         // Forward a la pagina del mensaje
-        getServletContext().getRequestDispatcher("/Message.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/mensajeIngreso.jsp").forward(request, response);
 
     }
 
