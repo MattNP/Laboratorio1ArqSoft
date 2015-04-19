@@ -6,8 +6,7 @@
 package com.udea.controller;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,16 +14,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 
 /**
  *
@@ -36,6 +32,9 @@ public class ConsultarServlet extends HttpServlet {
     private String dbURL = "jdbc:mysql://localhost:3306/Archivo";//Cambie archivo por Archivo
     private String dbUser = "root";
     private String dbPass = "";
+    private Blob img;
+    byte[] imgData = null;
+    private ArrayList<String> lista;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -51,27 +50,6 @@ public class ConsultarServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         String firstName = request.getParameter("firstName").toUpperCase();
-        /*String lastName = request.getParameter("lastName");
-         String age = request.getParameter("age");
-         String weight = request.getParameter("weight");
-         String height = request.getParameter("height");
-         String position = request.getParameter("position");*/
-
-        //InputStream inputStream = null;
-        /*
-         // Obtener el archivo en partes a traves de una petición Multipart
-         Part filePart = request.getPart("photo");
-
-         if (filePart != null) {
-
-         // Información para Debug
-         System.out.println(filePart.getName());
-         System.out.println(filePart.getSize());
-         System.out.println(filePart.getContentType());
-
-         // Obtener el InputStream del Archivo Subido
-         inputStream = filePart.getInputStream();
-         }*/
         Connection conn = null;
         String message = "";
 
@@ -79,47 +57,24 @@ public class ConsultarServlet extends HttpServlet {
             // Conectar la BD
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
-            /*
-             // Construir un estamento en SQL
-             String sql = "INSERT INTO contacts(first_name,last_name,age,height,weight,position,photo)values(?,?,?,?,?,?,?)";          
-             PreparedStatement statement = conn.prepareStatement(sql);
-             */
+
+            // Construir un estamento en SQL
             String selectSQL = "SELECT first_name,last_name,age,height,weight,position,born,photo FROM contacts WHERE first_name=?";
             PreparedStatement pStatement = conn.prepareStatement(selectSQL);
             pStatement.setString(1, firstName);
             ResultSet rs = pStatement.executeQuery();
-            ArrayList lista = new ArrayList();
+
+            lista = new ArrayList<>();
+
+            //Se carga el vector lista con los datos cada columna
             while (rs.next()) {
                 for (int x = 1; x <= rs.getMetaData().getColumnCount(); x++) {
                     lista.add(rs.getString(x));
-                    System.out.print(rs.getString(x) + "\t");
                 }
+                img = rs.getBlob(8);
+                imgData = img.getBytes(1, (int) img.length());
             }
-            for (int i = 0; i < lista.size(); i++) {
-                message = message + lista.get(i) +  ",";
-            }
-            /*
-            
-             */
 
-            /*
-            
-             statement.setString(1, firstName);
-             statement.setString(2, lastName);
-             statement.setString(3, age);
-             statement.setString(4, height);
-             statement.setString(5, weight);
-             statement.setString(6, position);
-
-             if (inputStream != null) {
-             statement.setBlob(7, inputStream);
-             }
-
-             // Enviar el estamento al servidor de BD
-             int row = pStatement.executeUpdate();
-             if (row > 0) {
-             message = "TODO BIEN, SIN ERRORES";
-             }*/
         } catch (SQLException ex) {
             message = "ERROR: " + ex.getMessage();
             ex.printStackTrace();
@@ -135,7 +90,9 @@ public class ConsultarServlet extends HttpServlet {
             }
         }
         // Setear el mensaje en el ambito del Request
-        request.setAttribute("Message", message);
+        request.setAttribute("lista", lista);
+        request.setAttribute("message", message);
+        request.setAttribute("imgData", imgData);
 
         // Forward a la pagina del mensaje
         getServletContext().getRequestDispatcher("/mensajeIngreso.jsp").forward(request, response);

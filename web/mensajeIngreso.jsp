@@ -40,9 +40,71 @@
                 
       
                 <div style=" background-image: url(Resources/Contenido.jpg);position:relative; color: black;width: 49%; float: left;height:100%; ">
-                    <center>
-                    <h1><%=request.getAttribute("Message")%> </h1>
-                    </center>
+                    <h1>CONSULTA</h1>
+            <form method="post" action="ConsultarServlet" enctype="multipart/form-data">
+                <table border="0">                         
+                    
+                    <tr>
+                        <td>Nombres: </td>
+                        <td><input type="text" name="firstName" class="form-control" placeholder="${lista[status.index+0]}"size="35" disabled="disabled"/></td>
+                    </tr>
+
+                    <tr>
+                        <td><br>Apellidos: </td>
+
+                        <td>
+                            <br><input type="text" name="lastName" class="form-control" placeholder="${lista[status.index+1]}" size="35" disabled="disabled"/></td>
+                    </tr>
+
+                    <tr>                        
+                        <td><br>Edad:</td>
+                    <br>
+                    <td>
+                        <br><input type="text" name="age" class="form-control" placeholder="${lista[status.index+2]}" size="20" disabled="disabled"/></td>
+                    </tr>
+
+                    <tr>                        
+                        <td><br>Estatura:</td>
+
+                        <td>
+                            <br><input type="text" name="height" class="form-control" placeholder="${lista[status.index+3]}" size="20" disabled="disabled"/></td>
+                    </tr>
+
+                    <tr>                        
+                        <td><br>Peso:</td>
+
+                        <td>
+                            <br><input type="text" name="weight" class="form-control" placeholder="${lista[status.index+4]}" size="20" disabled="disabled"/></td>
+                    </tr>
+
+                    <tr>                        
+                        <td><br>Posición de juego:</td>
+
+                        <td>
+                            <br><input type="text" name="position" class="form-control" placeholder="${lista[status.index+5]}" size="20" disabled="disabled"/></td>
+                    </tr>
+
+                    <tr>                        
+                        <td><br>Fecha de nacimiento:</td>
+
+                        <td>
+                            <br><input type="text" name="born" class="form-control" placeholder="${lista[status.index+6]}" size="20" disabled="disabled"/></td>
+                    </tr>
+
+                    <tr>
+                        <td><br>Foto:</td>
+
+                        <td><br><input type="image" name="photo" size="50" placeholder="${imgData}" disabled="disabled"/></td>
+                    </tr>
+                    <tr>                        
+                        <td colspan="2">
+                            <br>
+                    <center> <a class="btn-primary" style="vertical-align: 50px;" HREF="buscar.jsp"><b> REGRESAR </b></a></center>
+                    </td>
+                    </tr>
+
+                </table>
+            </form>
                 </div> 
         
                 <div  style="position:relative; color: black;background: rgba(255, 255, 255, .5); width: 25%;float: left;height:100%;">

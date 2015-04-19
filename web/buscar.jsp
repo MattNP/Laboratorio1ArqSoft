@@ -9,6 +9,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="style.css">
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="botones.css">
         <title>Álbum Virtual</title>
     </head>
@@ -44,13 +51,14 @@
                     <form method="post" action="ConsultarServlet" enctype="multipart/form-data">
                      <table border="0">
                         <tr>
-                            <td>Nombres: </td>
-                            <td><input type="text" name="firstName" class="form-control" placeholder="Nombres"size="50"/></td>
+                        <br>
+                            <td><Font size="4"> <b>Nombres: </b></Font></td>
+                            <td><input type="text" name="firstName" class="form-control" placeholder="Nombres"size="35"/></td>
                          </tr>
                         <tr>
                             <td colspan="2">
                                 <br>
-                                <input class="btn btn-primary btn-block" type="submit" value="CONSULTAR">
+                        <center><input class="btn btn-primary btn-block" type="submit" value="CONSULTAR"></center>
                             </td>
                         </tr>
                     </table>
