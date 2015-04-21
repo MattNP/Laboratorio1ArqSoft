@@ -6,6 +6,8 @@
 package com.udea.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -32,9 +34,6 @@ public class ConsultarServlet extends HttpServlet {
     private String dbURL = "jdbc:mysql://localhost:3306/archivo";//Cambie archivo por Archivo
     private String dbUser = "root";
     private String dbPass = "";
-    private Blob img;
-    byte[] imgData = null;
-    private ArrayList<String> lista;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -52,7 +51,14 @@ public class ConsultarServlet extends HttpServlet {
         String firstName = request.getParameter("firstName").toUpperCase();
         Connection conn = null;
         String message = "";
-
+        Blob img;
+        byte[] imgData = null;
+        ArrayList<Object> lista = null;
+        ArrayList<String> sublista = null;
+        OutputStream aux = null;
+        InputStream is = null;
+        byte[] buffer;
+        int nBytes = 0;
         try {
             // Conectar la BD
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
@@ -68,15 +74,31 @@ public class ConsultarServlet extends HttpServlet {
 
             //Se carga el vector lista con los datos cada columna
             while (rs.next()) {
+                sublista = new ArrayList<>();
                 for (int x = 1; x <= rs.getMetaData().getColumnCount(); x++) {
-                    lista.add(rs.getString(x));
+                    sublista.add(rs.getString(x));
                 }
-                img = rs.getBlob(8);
-                imgData = img.getBytes(1, (int) img.length());
-            }
+                lista.add(sublista);
+                /*             
+                 response.setContentType("image/jpeg");
+                 aux = response.getOutputStream();
+                 is = rs.getBinaryStream(8);
 
-            if(rs==null){
-                message = "El jugador no ha sido encontrado en el Album Virtual";                
+                 buffer = new byte[4096];
+                 for (;;) {
+                 nBytes = is.read(buffer);
+                 if (nBytes == -1) {
+                 break;
+                 }
+
+                 aux.write(buffer, 0, nBytes);
+                 /*img = rs.getBlob(8);
+                 imgData = img.getBytes(1, (int) img.length());
+                 }
+                 is.close();
+                 aux.flush();
+                 aux.close();
+                 */
             }
         } catch (SQLException ex) {
             message = "ERROR: " + ex.getMessage();
@@ -95,7 +117,7 @@ public class ConsultarServlet extends HttpServlet {
         // Setear el mensaje en el ambito del Request
         request.setAttribute("lista", lista);
         request.setAttribute("message", message);
-        request.setAttribute("imgData", imgData);
+        //request.setAttribute("imgData", imgData);
 
         // Forward a la pagina del mensaje
         getServletContext().getRequestDispatcher("/Consulta.jsp").forward(request, response);

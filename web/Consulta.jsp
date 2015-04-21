@@ -4,6 +4,7 @@
     Author     : jedisson.tapias
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -41,60 +42,66 @@
                 <div style=" background-image: url(Resources/Contenido.jpg);position:relative; color: #000000;width: 49%; float: left;height:100%; ">
                     <h1>CONSULTA</h1>
             <form method="post" action="ConsultarServlet" enctype="multipart/form-data">
-                <table border="0">                         
+                <table border="0">    
                     
-                    <tr>
+                    <c:forEach var="objeto" items="${lista}">
+                        
+                       <tr>
                         <td>Nombres: </td>
-                        <td><input type="text" name="firstName" class="form-control" placeholder="${lista[status.index+0]}"size="35" disabled="disabled"/></td>
+                        <td><input type="text" name="firstName" class="form-control" placeholder="${objeto[0]}" size="35" disabled="disabled"/></td>
                     </tr>
 
                     <tr>
                         <td><br>Apellidos: </td>
 
                         <td>
-                            <br><input type="text" name="lastName" class="form-control" placeholder="${lista[status.index+1]}" size="35" disabled="disabled"/></td>
+                            <br><input type="text" name="lastName" class="form-control" placeholder="${objeto[1]}" size="35" disabled="disabled"/></td>
                     </tr>
 
                     <tr>                        
                         <td><br>Edad:</td>
                     <br>
                     <td>
-                        <br><input type="text" name="age" class="form-control" placeholder="${lista[status.index+2]}" size="20" disabled="disabled"/></td>
+                        <br><input type="text" name="age" class="form-control" placeholder="${objeto[2]}" size="20" disabled="disabled"/></td>
                     </tr>
 
                     <tr>                        
                         <td><br>Estatura:</td>
 
                         <td>
-                            <br><input type="text" name="height" class="form-control" placeholder="${lista[status.index+3]}" size="20" disabled="disabled"/></td>
+                            <br><input type="text" name="height" class="form-control" placeholder="${objeto[3]}" size="20" disabled="disabled"/></td>
                     </tr>
 
                     <tr>                        
                         <td><br>Peso:</td>
 
                         <td>
-                            <br><input type="text" name="weight" class="form-control" placeholder="${lista[status.index+4]}" size="20" disabled="disabled"/></td>
+                            <br><input type="text" name="weight" class="form-control" placeholder="${objeto[4]}" size="20" disabled="disabled"/></td>
                     </tr>
 
                     <tr>                        
                         <td><br>Posición de juego:</td>
 
                         <td>
-                            <br><input type="text" name="position" class="form-control" placeholder="${lista[status.index+5]}" size="20" disabled="disabled"/></td>
+                            <br><input type="text" name="position" class="form-control" placeholder="${objeto[5]}" size="20" disabled="disabled"/></td>
                     </tr>
 
                     <tr>                        
                         <td><br>Fecha de nacimiento:</td>
 
                         <td>
-                            <br><input type="text" name="born" class="form-control" placeholder="${lista[status.index+6]}" size="20" disabled="disabled"/></td>
+                            <br><input type="text" name="born" class="form-control" placeholder="${objeto[6]}" size="20" disabled="disabled"/></td>
                     </tr>
-
+                    <%--
                     <tr>
                         <td><br>Foto:</td>
 
                         <td><br><input type="image" name="photo" size="50" placeholder="${imgData}" disabled="disabled"/></td>
-                    </tr>
+                    </tr> 
+                        --%>
+                    </c:forEach>
+                    
+                    
                     <tr>                        
                         <td colspan="2">
                             <br>
