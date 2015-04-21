@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 @MultipartConfig(maxFileSize = 16177215)
 public class ConsultarServlet extends HttpServlet {
 
-    private String dbURL = "jdbc:mysql://localhost:3306/Archivo";//Cambie archivo por Archivo
+    private String dbURL = "jdbc:mysql://localhost:3306/archivo";//Cambie archivo por Archivo
     private String dbUser = "root";
     private String dbPass = "";
     private Blob img;
@@ -75,6 +75,9 @@ public class ConsultarServlet extends HttpServlet {
                 imgData = img.getBytes(1, (int) img.length());
             }
 
+            if(rs==null){
+                message = "El jugador no ha sido encontrado en el Album Virtual";                
+            }
         } catch (SQLException ex) {
             message = "ERROR: " + ex.getMessage();
             ex.printStackTrace();
@@ -95,7 +98,7 @@ public class ConsultarServlet extends HttpServlet {
         request.setAttribute("imgData", imgData);
 
         // Forward a la pagina del mensaje
-        getServletContext().getRequestDispatcher("/mensajeIngreso.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/Consulta.jsp").forward(request, response);
 
     }
 

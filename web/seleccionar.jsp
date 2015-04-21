@@ -32,9 +32,8 @@
                     <div  style="position:relative;color: #FF00FF;background:white;  width:80%; vertical-align: middle;display: table-cell;background-color: transparent;" >
                     <!--<button  style="color:white ;font-family: sans-serif;font-size: 24px;font-weight: bold;background:#bf1b04;box-shadow: 0px 5px 0 #8F1502;border-radius: 50px;border:0;transition: all 0.20s linear;-webkit-transition: all 0.20s linear;-moz-transition: all 0.20s linear; position:relative;bottom:0;width: 100px;height: 40px;vertical-align: 30px;">Inicio</button><br>-->
                     <a class="button beige" style="vertical-align: 50px;"HREF="index.html">   Inicio   </a><br>
-                    <a class="button beige" style="vertical-align: 50px;"HREF="ingresar.jsp">Ingresar</a><br>
-                    <a class="button beige" style="vertical-align: 50px; "HREF="buscar.jsp"> Buscar </a><br>
-                    <a class="button beige" style="vertical-align: 50px;"HREF="codigo.jsp"> Código </a>
+                    <a class="button beige" style="vertical-align: 50px;"HREF="Ingreso.jsp">Ingresar</a><br>
+                    <a class="button beige" style="vertical-align: 50px; "HREF="Busqueda.jsp"> Buscar </a><br>
                     </div>
                 </div>
                 
@@ -46,13 +45,12 @@
                 </div> 
         
                 <div  style="position:relative; color: black;background: rgba(255, 255, 255, .5); width: 25%;float: left;height:100%;">
-                    <<br>
+                    <br>
                     <b><Font size="4" color="Black">DESARROLLADORES</Font></b>                   
                     <br>
-                    <Font size="4" color="black"><p><u><b>Back-end</b></u><br>>>Mateo Noreña</p></Font>
-                    <Font size="4" color="black" ><p><u><b>Middle-end</b></u><br>>>Esteban Cataño<br>>>Jorge Diaz</p></Font>
-                    <Font size="4" color="black" ><p><u><b>Front-end</b></u><br>>>John Tapias</p></Font>
-                </div>  
+                    <Font size="4" color="black"><p><br><b>Mateo Noreña<br>Esteban Cataño<br>Jorge Diaz<br>John Tapias</b></p></Font>
+                </div> 
+                
                 <br><br><br>
                 <Font color="white"> <marquee>_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-</marquee></Font>
             </div>

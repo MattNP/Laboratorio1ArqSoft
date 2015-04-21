@@ -30,7 +30,7 @@ import javax.servlet.http.Part;
 @MultipartConfig(maxFileSize = 16177215)
 public class SubirServlet extends HttpServlet {
 
-    private String dbURL = "jdbc:mysql://localhost:3306/Archivo";
+    private String dbURL = "jdbc:mysql://localhost:3306/archivo";
     private String dbUser = "root";
     private String dbPass = "";
 
@@ -158,6 +158,7 @@ public class SubirServlet extends HttpServlet {
             }
 
             // Enviar el estamento al servidor de BD
+          
             int row = statement.executeUpdate();
             if (row > 0) {
                 message = "Archivo actualizado y almacenado en la BD";

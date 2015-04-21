@@ -39,9 +39,8 @@
                     <div  style="position:relative;color: #FF00FF;background:white;  width:80%; vertical-align: middle;display: table-cell;background-color: transparent;" >
                     <!--<button  style="color:white ;font-family: sans-serif;font-size: 24px;font-weight: bold;background:#bf1b04;box-shadow: 0px 5px 0 #8F1502;border-radius: 50px;border:0;transition: all 0.20s linear;-webkit-transition: all 0.20s linear;-moz-transition: all 0.20s linear; position:relative;bottom:0;width: 100px;height: 40px;vertical-align: 30px;">Inicio</button><br>-->
                     <a class="button beige" style="vertical-align: 50px;"HREF="index.html">   Inicio   </a><br>
-                    <a class="button beige" style="vertical-align: 50px;"HREF="ingresar.jsp">Ingresar</a><br>
-                    <a class="button beige" style="vertical-align: 50px; "HREF="buscar.jsp"> Buscar </a><br>
-                    <a class="button beige" style="vertical-align: 50px;"HREF="codigo.jsp"> Código </a>
+                    <a class="button beige" style="vertical-align: 50px;"HREF="Ingreso.jsp">Ingresar</a><br>
+                    <a class="button beige" style="vertical-align: 50px; "HREF="Busqueda.jsp"> Buscar </a><br>
                     </div>
                 </div>
                 
@@ -53,53 +52,53 @@
             <form method="post" action="SubirServlet" enctype="multipart/form-data">
                 <table border="0">
                     <tr>
-                        <td>Nombres: </td>
+                    <td><b>Nombres: </b></td>
                         <td><input type="text" name="firstName" class="form-control" placeholder="Nombres"size="15"/></td>
                     </tr>
                     <tr>
-                        <td><br>Apellidos: </td>
+                        <td><b><br>Apellidos: </b></td>
 
                         <td>
                             <br><input type="text" name="lastName" class="form-control" placeholder="Apellidos"size="15"/></td>
                     </tr>
 
                     <tr>                        
-                        <td><br>Edad:</td>
+                        <td><b><br>Edad: </b></td>
                     <br>
                     <td>
                         <br><input type="text" name="age" class="form-control" placeholder="Edad"size="10"/></td>
                     </tr>
 
                     <tr>                        
-                        <td><br>Estatura:</td>
+                       <td><b><br>Estatura: </b></td>
                     
                     <td>
                         <br><input type="text" name="height" class="form-control" placeholder="Estatura (cm)"size="10"/></td>
                     </tr>
                     
                     <tr>                        
-                        <td><br>Peso:</td>
+                        <td><br><b>Peso:</b></td>
                     
                     <td>
                         <br><input type="text" name="weight" class="form-control" placeholder="Peso (kg)"size="10"/></td>
                     </tr>
                     
                     <tr>                        
-                        <td><br>Posición de juego:</td>
+                        <td><br><b>Posición de juego:</b></td>
                     
                     <td>
                         <br><input type="text" name="position" class="form-control" placeholder="(ARQUERO,DEFENSA,VOLANTE,DELANTERO)"size="15"/></td>
                     </tr>
                     
                     <tr>                        
-                        <td><br>Fecha de nacimiento:</td>
+                        <td><br><b>Fecha de nacimiento:</b></td>
                     
                     <td>
                         <br><input type="date" name="born" class="form-control" placeholder="Fecha de nacimiento"size="15"/></td>
                     </tr>
                     
                     <tr>
-                        <td><br>Foto:</td>
+                        <td><br><b>Foto:</b></td>
 
                         <td><br><input type="file" name="photo" size="10"/></td>
                     </tr>
@@ -122,11 +121,9 @@
                     <br>
                     <b><Font size="4" color="Black">DESARROLLADORES</Font></b>                   
                     <br>
-                    <Font size="4" color="black"><p><u><b>Back-end</b></u><br>>>Mateo Noreña</p></Font>
-                    <Font size="4" color="black" ><p><u><b>Middle-end</b></u><br>>>Esteban Cataño<br>>>Jorge Diaz</p></Font>
-                    <Font size="4" color="black" ><p><u><b>Front-end</b></u><br>>>John Tapias</p></Font>
-                    
-                </div>  
+                    <Font size="4" color="black"><p><br><b>Mateo Noreña<br>Esteban Cataño<br>Jorge Diaz<br>John Tapias</b></p></Font>
+                </div> 
+                
                 <br><br><br>
                 <Font color="white"> <marquee>_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-</marquee></Font>
             
