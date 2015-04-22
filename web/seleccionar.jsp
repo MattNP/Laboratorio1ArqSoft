@@ -3,7 +3,7 @@
     Created on : 17/04/2015, 05:00:45 PM
     Author     : jedisson.tapias
 --%>
-
+<%@ taglib prefix="jlib" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -39,9 +39,23 @@
                 
       
                 <div style=" background-image: url(Resources/Contenido.jpg);position:relative; color: #FF00FF;width: 49%; float: left;height:100%; ">
-                    <h5>Section 2.2</h5>
-                    <p>This paragraph would be your content paragraph...</p>
-                    <p>Here's another content article right here.</p>
+                    <h1>RESULTADO</h1>
+                    
+                    <form method="post" action="MostrarServlet" enctype="multipart/form-data">
+                        <select name="jugador">
+                        <jlib:forEach var="objeto" items="${lista}"><!-- Recorre la lista con los resultados de la busqueda-->
+                            
+                                <option value=${objeto[0]}>${objeto[1]} ${objeto[2]}</option>
+                            
+                            
+                             <!--   <a href="Consulta.asp"> </a> <!-- Genera un hipervilculo a cada resultado-->
+                            
+                        </jlib:forEach>
+                        </select>
+                        <br>
+                        <input type="submit" value="Enviar">
+                    </form>
+                    
                 </div> 
         
                 <div  style="position:relative; color: black;background: rgba(255, 255, 255, .5); width: 25%;float: left;height:100%;">

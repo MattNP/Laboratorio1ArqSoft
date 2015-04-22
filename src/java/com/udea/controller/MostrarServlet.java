@@ -8,6 +8,7 @@ package com.udea.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,15 +27,14 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author jorgel.diaz
+ * @author jedisson.tapias
  */
 @MultipartConfig(maxFileSize = 16177215)
-public class ConsultarServlet extends HttpServlet {
+public class MostrarServlet extends HttpServlet {
 
-    private String dbURL = "jdbc:mysql://localhost:3306/archivo";//Cambie archivo por Archivo
-    private String dbUser = "root";
-    private String dbPass = "";
-
+    private final String dbURL = "jdbc:mysql://localhost:3306/archivo";//Cambie archivo por Archivo
+    private final String dbUser = "root";
+    private final String dbPass = "";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,14 +42,17 @@ public class ConsultarServlet extends HttpServlet {
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException if an I/O error occur
+     * @throws java.sql.SQLException
+     * @throws java.text.ParseException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, ParseException {
+            throws ServletException, IOException,SQLException, ParseException {
         response.setContentType("text/html;charset=UTF-8");
-
-        String firstName = request.getParameter("firstName").toUpperCase();
-        Connection conn = null;
+        
+        //int idJugador = Integer.parseInt(request.getParameter("jugador"));
+        String idJugador = request.getParameter("jugador");
+                Connection conn = null;
         String message = "";
         Blob img;
         byte[] imgData = null;
@@ -59,16 +62,17 @@ public class ConsultarServlet extends HttpServlet {
         InputStream is = null;
         byte[] buffer;
         int nBytes = 0;
-        try {
-            // Conectar la BD
+        
+        try{
+                        // Conectar la BD
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
 
             // Construir un estamento en SQL
             //String selectSQL = "SELECT contact_id,first_name,last_name,age,height,weight,position,born,photo FROM contacts WHERE first_name=?";
-            String selectSQL = "SELECT contact_id,first_name,last_name FROM contacts WHERE first_name=?";
+            String selectSQL = "SELECT * FROM contacts WHERE contact_id=?";
             PreparedStatement pStatement = conn.prepareStatement(selectSQL);
-            pStatement.setString(1, firstName);
+            pStatement.setString(1, idJugador);
             ResultSet rs = pStatement.executeQuery();
 
             lista = new ArrayList<>();
@@ -80,31 +84,13 @@ public class ConsultarServlet extends HttpServlet {
                     sublista.add(rs.getString(x));
                 }
                 lista.add(sublista);
-                /*             
-                 response.setContentType("image/jpeg");
-                 aux = response.getOutputStream();
-                 is = rs.getBinaryStream(8);
-
-                 buffer = new byte[4096];
-                 for (;;) {
-                 nBytes = is.read(buffer);
-                 if (nBytes == -1) {
-                 break;
-                 }
-
-                 aux.write(buffer, 0, nBytes);
-                 /*img = rs.getBlob(8);
-                 imgData = img.getBytes(1, (int) img.length());
-                 }
-                 is.close();
-                 aux.flush();
-                 aux.close();
-                 */
+                
             }
-        } catch (SQLException ex) {
+            
+        }catch (SQLException ex) {
             message = "ERROR: " + ex.getMessage();
             ex.printStackTrace();
-        } finally {
+        }finally {
 
             // Cerramos la conexion a la BD
             if (conn != null) {
@@ -118,14 +104,13 @@ public class ConsultarServlet extends HttpServlet {
         // Setear el mensaje en el ambito del Request
         request.setAttribute("lista", lista);
         request.setAttribute("message", message);
-        //request.setAttribute("imgData", imgData);
+
 
         // Forward a la pagina del mensaje
-        getServletContext().getRequestDispatcher("/seleccionar.jsp").forward(request, response);
-        //getServletContext().getRequestDispatcher("/Consulta.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/Consulta.jsp").forward(request, response);
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -137,7 +122,7 @@ public class ConsultarServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
+                try {
             processRequest(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(ConsultarServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -157,7 +142,7 @@ public class ConsultarServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
+               try {
             processRequest(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(ConsultarServlet.class.getName()).log(Level.SEVERE, null, ex);
