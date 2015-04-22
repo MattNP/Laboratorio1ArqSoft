@@ -55,12 +55,12 @@ public class SubirServlet extends HttpServlet {
         String position = request.getParameter("position").toUpperCase();
         String born = request.getParameter("born");
 
-        if (validarString(firstName) == false) {
+        if (validarFirstName(firstName) == false) {
             // Setear el mensaje en el ambito del Request
             request.setAttribute("Message", "El atributo Nombre contiene errores por favor corregirlos");
 
             // Forward a la pagina del mensaje
-            getServletContext().getRequestDispatcher("/mensajeIngreso.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/Mensaje.jsp").forward(request, response);
             return;
         }
 
@@ -69,7 +69,7 @@ public class SubirServlet extends HttpServlet {
             request.setAttribute("Message", "El atributo Apellido contiene errores por favor corregirlos");
 
             // Forward a la pagina del mensaje
-            getServletContext().getRequestDispatcher("/mensajeIngreso.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/Mensaje.jsp").forward(request, response);
             return;
         }
 
@@ -78,7 +78,7 @@ public class SubirServlet extends HttpServlet {
             request.setAttribute("Message", "El atributo Edad contiene errores por favor corregirlos");
 
             // Forward a la pagina del mensaje
-            getServletContext().getRequestDispatcher("/mensajeIngreso.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/Mensaje.jsp").forward(request, response);
             return;
         }
 
@@ -87,7 +87,7 @@ public class SubirServlet extends HttpServlet {
             request.setAttribute("Message", "El atributo Peso contiene errores por favor corregirlos");
 
             // Forward a la pagina del mensaje
-            getServletContext().getRequestDispatcher("/mensajeIngreso.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/Mensaje.jsp").forward(request, response);
             return;
         }
 
@@ -96,7 +96,7 @@ public class SubirServlet extends HttpServlet {
             request.setAttribute("Message", "El atributo Estatura contiene errores por favor corregirlos");
 
             // Forward a la pagina del mensaje
-            getServletContext().getRequestDispatcher("/mensajeIngreso.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/Mensaje.jsp").forward(request, response);
             return;
         }
 
@@ -105,18 +105,18 @@ public class SubirServlet extends HttpServlet {
             request.setAttribute("Message", "El atributo Posicion contiene errores por favor corregirlos");
 
             // Forward a la pagina del mensaje
-            getServletContext().getRequestDispatcher("/mensajeIngreso.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/Mensaje.jsp").forward(request, response);
             return;
         }
 
-        if (validarFecha(born) == false) {
+        /*if (validarFecha(born) == false) {
          // Setear el mensaje en el ambito del Request
          request.setAttribute("Message", "El atributo Fecha Nacimiento contiene errores por favor corregirlos");
 
          // Forward a la pagina del mensaje
-         getServletContext().getRequestDispatcher("/mensajeIngreso.jsp").forward(request, response);
+         getServletContext().getRequestDispatcher("/Mensaje.jsp").forward(request, response);
          return;
-         }
+         }*/
         InputStream inputStream = null;
 
         // Obtener el archivo en partes a traves de una petición Multipart
@@ -181,10 +181,31 @@ public class SubirServlet extends HttpServlet {
         request.setAttribute("Message", message);
 
         // Forward a la pagina del mensaje
-        getServletContext().getRequestDispatcher("/mensajeIngreso.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/Mensaje.jsp").forward(request, response);
 
     }
 
+    private boolean validarFirstName(String date){
+        char c;
+        boolean primerCaracter = false;
+        for(int i = 0; i < date.length(); i++){
+            c = date.charAt(i);
+            if(" ".equals(""+c) == false){
+                primerCaracter = true;
+            }
+        }
+        if(primerCaracter == false){
+            return false;
+        }
+        for (int i = 0; i < date.length(); i++) {
+            c = date.charAt(i);
+            if (((Character.isLetter(c) || " ".equals(""+c))) == false) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
     private boolean validarString(String date) {
         char c;
         for (int i = 0; i < date.length(); i++) {

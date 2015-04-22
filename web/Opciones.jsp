@@ -38,10 +38,10 @@
                 </div>
                 
       
-                <div style=" background-image: url(Resources/Contenido.jpg);position:relative; color: #FF00FF;width: 49%; float: left;height:100%; ">
+                <div style=" background-image: url(Resources/Contenido.jpg);position:relative; color: black;width: 49%; float: left;height:100%; ">
                     <h1>RESULTADO</h1>
                     
-                    <form method="post" action="MostrarServlet" enctype="multipart/form-data">
+                    <form method="post" action="ImagenServlet" enctype="multipart/form-data">
                         <select name="jugador">
                         <jlib:forEach var="objeto" items="${lista}"><!-- Recorre la lista con los resultados de la busqueda-->
                             

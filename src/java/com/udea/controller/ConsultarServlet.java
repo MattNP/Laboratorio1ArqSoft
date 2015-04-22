@@ -50,15 +50,11 @@ public class ConsultarServlet extends HttpServlet {
 
         String firstName = request.getParameter("firstName").toUpperCase();
         Connection conn = null;
-        String message = "";
-        Blob img;
+        String message = "";       
         byte[] imgData = null;
         ArrayList<Object> lista = null;
         ArrayList<String> sublista = null;
-        OutputStream aux = null;
-        InputStream is = null;
-        byte[] buffer;
-        int nBytes = 0;
+        
         try {
             // Conectar la BD
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
@@ -79,27 +75,7 @@ public class ConsultarServlet extends HttpServlet {
                 for (int x = 1; x <= rs.getMetaData().getColumnCount(); x++) {
                     sublista.add(rs.getString(x));
                 }
-                lista.add(sublista);
-                /*             
-                 response.setContentType("image/jpeg");
-                 aux = response.getOutputStream();
-                 is = rs.getBinaryStream(8);
-
-                 buffer = new byte[4096];
-                 for (;;) {
-                 nBytes = is.read(buffer);
-                 if (nBytes == -1) {
-                 break;
-                 }
-
-                 aux.write(buffer, 0, nBytes);
-                 /*img = rs.getBlob(8);
-                 imgData = img.getBytes(1, (int) img.length());
-                 }
-                 is.close();
-                 aux.flush();
-                 aux.close();
-                 */
+                lista.add(sublista);                
             }
         } catch (SQLException ex) {
             message = "ERROR: " + ex.getMessage();
@@ -115,13 +91,18 @@ public class ConsultarServlet extends HttpServlet {
                 }
             }
         }
+
+        if (lista.size() == 0) {
+                request.setAttribute("Message", "No se encuentra ningún registro en la base de datos");
+                getServletContext().getRequestDispatcher("/Mensaje.jsp").forward(request, response);
+                return;
+            }
         // Setear el mensaje en el ambito del Request
         request.setAttribute("lista", lista);
         request.setAttribute("message", message);
-        //request.setAttribute("imgData", imgData);
 
         // Forward a la pagina del mensaje
-        getServletContext().getRequestDispatcher("/seleccionar.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/Opciones.jsp").forward(request, response);
         //getServletContext().getRequestDispatcher("/Consulta.jsp").forward(request, response);
     }
 

@@ -8,6 +8,10 @@
         <servlet-name>MostrarServlet</servlet-name>
         <servlet-class>com.udea.controller.MostrarServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ImagenServlet</servlet-name>
+        <servlet-class>com.udea.controller.ImagenServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SubirServlet</servlet-name>
         <url-pattern>/SubirServlet</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>MostrarServlet</servlet-name>
         <url-pattern>/MostrarServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ImagenServlet</servlet-name>
+        <url-pattern>/ImagenServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

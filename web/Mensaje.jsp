@@ -46,7 +46,7 @@
                     <tr>                        
                         <td colspan="2">
                             <br>
-                    <center> <a class="btn-primary" style="vertical-align: 50px;" HREF="Ingreso.jsp"><b> REGRESAR </b></a></center>
+                    <center> <a class="btn-primary" style="vertical-align: 50px;" HREF="index.html"><b> INICIO </b></a></center>
                     </td>
                     </tr>
                 </div> 

@@ -15,26 +15,21 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author jedisson.tapias
+ * @author jorgel.diaz
  */
-@MultipartConfig(maxFileSize = 16177215)
-public class MostrarServlet extends HttpServlet {
+public class ImagenServlet extends HttpServlet {
 
-    private final String dbURL = "jdbc:mysql://localhost:3306/archivo";//Cambie archivo por Archivo
-    private final String dbUser = "root";
-    private final String dbPass = "";
+    private String dbURL = "jdbc:mysql://localhost:3306/archivo";//Cambie archivo por Archivo
+    private String dbUser = "root";
+    private String dbPass = "";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,21 +38,22 @@ public class MostrarServlet extends HttpServlet {
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occur
-     * @throws java.sql.SQLException
-     * @throws java.text.ParseException
+     * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException, ParseException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        //int idJugador = Integer.parseInt(request.getParameter("jugador"));
         String idJugador = request.getParameter("jugador");
+        OutputStream aux = null;
+        InputStream is = null;
+        byte[] buffer;
+        int nBytes = 0;
+       // Blob img;
         Connection conn = null;
         String message = "";
-        byte[] imgData = null;
-        ArrayList<Object> lista = null;
-        ArrayList<String> sublista = null;
+        /*ArrayList<Object> lista = null;
+         ArrayList<String> sublista = null;*/
 
         try {
             // Conectar la BD
@@ -65,23 +61,37 @@ public class MostrarServlet extends HttpServlet {
             conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
 
             // Construir un estamento en SQL
-            //String selectSQL = "SELECT contact_id,first_name,last_name,age,height,weight,position,born,photo FROM contacts WHERE first_name=?";
-            String selectSQL = "SELECT * FROM contacts WHERE contact_id=?";
+            String selectSQL = "SELECT photo FROM contacts WHERE contact_id=?";
             PreparedStatement pStatement = conn.prepareStatement(selectSQL);
-            pStatement.setString(1, idJugador);
+            pStatement.setString(1, "3");
             ResultSet rs = pStatement.executeQuery();
+            /*
+             lista = new ArrayList<>();
+            
+             //Se carga el vector lista con los datos cada columna
+             while (rs.next()) {
+             sublista = new ArrayList<>();
+             for (int x = 1; x <= rs.getMetaData().getColumnCount(); x++) {
+             sublista.add(rs.getString(x));
+             }
+             lista.add(sublista);
 
-            lista = new ArrayList<>();
+             }*/
 
-            //Se carga el vector lista con los datos cada columna
-            while (rs.next()) {
-                sublista = new ArrayList<>();
-                for (int x = 1; x <= rs.getMetaData().getColumnCount(); x++) {
-                    sublista.add(rs.getString(x));
+          
+            
+            aux = response.getOutputStream();
+            is = rs.getBinaryStream(0);
+
+            buffer = new byte[4096];
+            for (;;) {
+                nBytes = is.read(buffer);
+                if (nBytes == -1) {
+                    break;
                 }
-                lista.add(sublista);
-
             }
+            aux.write(buffer, 0, nBytes);
+            
 
         } catch (SQLException ex) {
             message = "ERROR: " + ex.getMessage();
@@ -97,16 +107,23 @@ public class MostrarServlet extends HttpServlet {
                 }
             }
         }
-        // Setear el mensaje en el ambito del Request
-        request.setAttribute("lista", lista);
-        request.setAttribute("message", message);
-
-        // Forward a la pagina del mensaje
-        getServletContext().getRequestDispatcher("/Consulta.jsp").forward(request, response);
+          response.setContentType("image/jpeg");
+          request.setAttribute("a", aux);
+         getServletContext().getRequestDispatcher("/newjsp.jsp").forward(request, response);
+        
     }
+    /*img = rs.getBlob(8);
+     imgData = img.getBytes(1, (int) img.length());
+     }
+     is.close();
+     aux.flush();
+     aux.close();
+         
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+     }
+
+     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+     /**
      * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
@@ -114,16 +131,11 @@ public class MostrarServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(ConsultarServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(ConsultarServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -137,13 +149,7 @@ public class MostrarServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(ConsultarServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(ConsultarServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
