@@ -6,16 +6,13 @@
 package com.udea.controller;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,9 +24,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ImagenServlet extends HttpServlet {
 
-    private String dbURL = "jdbc:mysql://localhost:3306/archivo";//Cambie archivo por Archivo
+    private String dbURL = "jdbc:mysql://localhost:3306/archivo";//Configurar segun su Base de datos.
     private String dbUser = "root";
-    private String dbPass = "";
+    private String dbPass = "root";//Configurar si su Base de datos requiere Password
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -48,11 +45,9 @@ public class ImagenServlet extends HttpServlet {
         Blob img;
         OutputStream os = null;
         byte[] buffer = null;
-       
+
         Connection conn = null;
         String message = "";
-        /*ArrayList<Object> lista = null;
-         ArrayList<String> sublista = null;*/
 
         try {
             // Conectar la BD
@@ -64,45 +59,17 @@ public class ImagenServlet extends HttpServlet {
             PreparedStatement pStatement = conn.prepareStatement(selectSQL);
             pStatement.setString(1, idJugador);
             ResultSet rs = pStatement.executeQuery();
-            
-            if(rs.next()){
+
+            if (rs.next()) {
                 img = rs.getBlob(1);
-                buffer = img.getBytes(1, (int)img.length());                
+                buffer = img.getBytes(1, (int) img.length());
             }
-            
-            /*
-             lista = new ArrayList<>();
-            
-             //Se carga el vector lista con los datos cada columna
-             while (rs.next()) {
-             sublista = new ArrayList<>();
-             for (int x = 1; x <= rs.getMetaData().getColumnCount(); x++) {
-             sublista.add(rs.getString(x));
-             }
-             lista.add(sublista);
 
-             }*/
-
-          
             response.setContentType("image/png");
             os = response.getOutputStream();
             os.write(buffer);
             os.flush();
-             os.close();
-            /*
-            buffer = new byte[4096];
-            for (;;) {
-                nBytes = is.read(buffer);
-                if (nBytes == -1) {
-                    break;
-                }
-            }
-        
-            
-             is.close();
-             os.flush();
-             os.close();
-*/
+            os.close();
         } catch (SQLException ex) {
             message = "ERROR: " + ex.getMessage();
             ex.printStackTrace();
@@ -117,10 +84,7 @@ public class ImagenServlet extends HttpServlet {
                 }
             }
         }
-        
-          
-        
-        
+
     }
     /*img = rs.getBlob(8);
      imgData = img.getBytes(1, (int) img.length());

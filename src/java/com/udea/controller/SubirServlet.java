@@ -30,9 +30,9 @@ import javax.servlet.http.Part;
 @MultipartConfig(maxFileSize = 16177215)
 public class SubirServlet extends HttpServlet {
 
-    private String dbURL = "jdbc:mysql://localhost:3306/archivo";
+    private String dbURL = "jdbc:mysql://localhost:3306/archivo";//Configurar segun su Base de datos.
     private String dbUser = "root";
-    private String dbPass = "";
+    private String dbPass = "root";//Configurar si su Base de datos requiere Password
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -108,15 +108,6 @@ public class SubirServlet extends HttpServlet {
             getServletContext().getRequestDispatcher("/Mensaje.jsp").forward(request, response);
             return;
         }
-
-        /*if (validarFecha(born) == false) {
-         // Setear el mensaje en el ambito del Request
-         request.setAttribute("Message", "El atributo Fecha Nacimiento contiene errores por favor corregirlos");
-
-         // Forward a la pagina del mensaje
-         getServletContext().getRequestDispatcher("/Mensaje.jsp").forward(request, response);
-         return;
-         }*/
         InputStream inputStream = null;
 
         // Obtener el archivo en partes a traves de una petición Multipart

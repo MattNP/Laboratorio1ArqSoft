@@ -6,9 +6,6 @@
 package com.udea.controller;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -31,9 +28,9 @@ import javax.servlet.http.HttpServletResponse;
 @MultipartConfig(maxFileSize = 16177215)
 public class ConsultarServlet extends HttpServlet {
 
-    private String dbURL = "jdbc:mysql://localhost:3306/archivo";//Cambie archivo por Archivo
+    private String dbURL = "jdbc:mysql://localhost:3306/archivo";//Configurar segun su Base de datos.
     private String dbUser = "root";
-    private String dbPass = "";
+    private String dbPass = "root";//Configurar si su Base de datos requiere Password
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -50,8 +47,7 @@ public class ConsultarServlet extends HttpServlet {
 
         String firstName = request.getParameter("firstName").toUpperCase();
         Connection conn = null;
-        String message = "";       
-        byte[] imgData = null;
+        String message = "";
         ArrayList<Object> lista = null;
         ArrayList<String> sublista = null;
         
@@ -61,7 +57,6 @@ public class ConsultarServlet extends HttpServlet {
             conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
 
             // Construir un estamento en SQL
-            //String selectSQL = "SELECT contact_id,first_name,last_name,age,height,weight,position,born,photo FROM contacts WHERE first_name=?";
             String selectSQL = "SELECT contact_id,first_name,last_name FROM contacts WHERE first_name=?";
             PreparedStatement pStatement = conn.prepareStatement(selectSQL);
             pStatement.setString(1, firstName);
@@ -103,7 +98,6 @@ public class ConsultarServlet extends HttpServlet {
 
         // Forward a la pagina del mensaje
         getServletContext().getRequestDispatcher("/Opciones.jsp").forward(request, response);
-        //getServletContext().getRequestDispatcher("/Consulta.jsp").forward(request, response);
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

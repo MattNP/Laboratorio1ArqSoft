@@ -122,11 +122,7 @@
                     <b><Font size="4" color="Black">DESARROLLADORES</Font></b>                   
                     <br>
                     <Font size="4" color="black"><p><br><b>Mateo Noreña<br>Esteban Cataño<br>Jorge Diaz<br>John Tapias</b></p></Font>
-                </div> 
-                    
-                <br><br><br>
-                <Font color="white"> <marquee>_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-_-*-</marquee></Font>
-    
+                </div>     
             </div>
             
         </div>

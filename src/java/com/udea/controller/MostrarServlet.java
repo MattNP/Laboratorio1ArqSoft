@@ -6,10 +6,6 @@
 package com.udea.controller;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -32,9 +28,9 @@ import javax.servlet.http.HttpServletResponse;
 @MultipartConfig(maxFileSize = 16177215)
 public class MostrarServlet extends HttpServlet {
 
-    private final String dbURL = "jdbc:mysql://localhost:3306/archivo";//Cambie archivo por Archivo
-    private final String dbUser = "root";
-    private final String dbPass = "";
+    private String dbURL = "jdbc:mysql://localhost:3306/archivo";//Configurar segun su Base de datos.
+    private String dbUser = "root";
+    private String dbPass = "root";//Configurar si su Base de datos requiere Password
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -51,9 +47,7 @@ public class MostrarServlet extends HttpServlet {
             throws ServletException, IOException, SQLException, ParseException {
         response.setContentType("text/html;charset=UTF-8");
 
-        //int idJugador = Integer.parseInt(request.getParameter("jugador"));
         String idJugador = request.getParameter("jugador");
-       // Blob img;
         Connection conn = null;
         String message = "";
         ArrayList<Object> lista = null;
@@ -65,7 +59,6 @@ public class MostrarServlet extends HttpServlet {
             conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
 
             // Construir un estamento en SQL
-            //String selectSQL = "SELECT contact_id,first_name,last_name,age,height,weight,position,born,photo FROM contacts WHERE first_name=?";
             String selectSQL = "SELECT * FROM contacts WHERE contact_id=?";
             PreparedStatement pStatement = conn.prepareStatement(selectSQL);
             pStatement.setString(1, idJugador);
