@@ -26,7 +26,7 @@ public class ImagenServlet extends HttpServlet {
 
     private String dbURL = "jdbc:mysql://localhost:3306/archivo";//Configurar segun su Base de datos.
     private String dbUser = "root";
-    private String dbPass = "root";//Configurar si su Base de datos requiere Password
+    private String dbPass = "";//Configurar si su Base de datos requiere Password
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
