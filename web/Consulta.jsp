@@ -39,66 +39,70 @@
                 </div>
                 
       
-                <div style=" background-image: url(Resources/Contenido.jpg);position:relative; color: #000000;width: 49%; float: left;height:100%; ">
+                <div style="overflow:auto; background-image: url(Resources/Contenido.jpg);position:relative; color: #000000;width: 49%; float: left;height:100%; ">
                     <h1>CONSULTA</h1>
             <form method="post" action="ConsultarServlet" enctype="multipart/form-data">
                 <table border="0">    
                     
                     <c:forEach var="objeto" items="${lista}">
                         
+                         <tr>
+                             <td><b>Foto:</b></td>
+
+                        <td><br><img src="ImagenServlet?jugador=${objeto[0]}" alt="IMAGEN"/></td>
+                    </tr> 
+                        
                        <tr>
-                        <td>Nombres: </td>
+                           <td><b>Nombres:</b> </td>
                         <td><input type="text" name="firstName" class="form-control" placeholder="${objeto[1]}" size="35" disabled="disabled"/></td>
                     </tr>
 
                     <tr>
-                        <td><br>Apellidos: </td>
+                        <td><br><b>Apellidos:</b> </td>
 
                         <td>
                             <br><input type="text" name="lastName" class="form-control" placeholder="${objeto[2]}" size="35" disabled="disabled"/></td>
                     </tr>
 
                     <tr>                        
-                        <td><br>Edad:</td>
+                        <td><br><b>Edad:</b></td>
                     <br>
                     <td>
                         <br><input type="text" name="age" class="form-control" placeholder="${objeto[3]}" size="20" disabled="disabled"/></td>
                     </tr>
 
                     <tr>                        
-                        <td><br>Estatura:</td>
+                        <td><br><b>Estatura:</b></td>
 
                         <td>
                             <br><input type="text" name="height" class="form-control" placeholder="${objeto[4]}" size="20" disabled="disabled"/></td>
                     </tr>
 
                     <tr>                        
-                        <td><br>Peso:</td>
+                        <td><br><b>Peso:</b></td>
 
                         <td>
                             <br><input type="text" name="weight" class="form-control" placeholder="${objeto[5]}" size="20" disabled="disabled"/></td>
                     </tr>
 
                     <tr>                        
-                        <td><br>Posición de juego:</td>
+                        <td><br><b>Posición de juego:</b></td>
 
                         <td>
                             <br><input type="text" name="position" class="form-control" placeholder="${objeto[6]}" size="20" disabled="disabled"/></td>
                     </tr>
 
                     <tr>                        
-                        <td><br>Fecha de nacimiento:</td>
+                        <td><br><b>Fecha de nacimiento:</b></td>
 
                         <td>
                             <br><input type="text" name="born" class="form-control" placeholder="${objeto[7]}" size="20" disabled="disabled"/></td>
                     </tr>
-                    <%--
-                    <tr>
-                        <td><br>Foto:</td>
+                    
+                    
+                           
+                    
 
-                        <td><br><input type="image" name="photo" size="50" placeholder="${imgData}" disabled="disabled"/></td>
-                    </tr> 
-                        --%>
                    </c:forEach> 
                     
                     

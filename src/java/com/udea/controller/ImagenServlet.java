@@ -45,11 +45,10 @@ public class ImagenServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         String idJugador = request.getParameter("jugador");
-        OutputStream aux = null;
-        InputStream is = null;
-        byte[] buffer;
-        int nBytes = 0;
-       // Blob img;
+        Blob img;
+        OutputStream os = null;
+        byte[] buffer = null;
+       
         Connection conn = null;
         String message = "";
         /*ArrayList<Object> lista = null;
@@ -63,8 +62,14 @@ public class ImagenServlet extends HttpServlet {
             // Construir un estamento en SQL
             String selectSQL = "SELECT photo FROM contacts WHERE contact_id=?";
             PreparedStatement pStatement = conn.prepareStatement(selectSQL);
-            pStatement.setString(1, "3");
+            pStatement.setString(1, idJugador);
             ResultSet rs = pStatement.executeQuery();
+            
+            if(rs.next()){
+                img = rs.getBlob(1);
+                buffer = img.getBytes(1, (int)img.length());                
+            }
+            
             /*
              lista = new ArrayList<>();
             
@@ -79,10 +84,12 @@ public class ImagenServlet extends HttpServlet {
              }*/
 
           
-            
-            aux = response.getOutputStream();
-            is = rs.getBinaryStream(0);
-
+            response.setContentType("image/png");
+            os = response.getOutputStream();
+            os.write(buffer);
+            os.flush();
+             os.close();
+            /*
             buffer = new byte[4096];
             for (;;) {
                 nBytes = is.read(buffer);
@@ -90,9 +97,12 @@ public class ImagenServlet extends HttpServlet {
                     break;
                 }
             }
-            aux.write(buffer, 0, nBytes);
+        
             
-
+             is.close();
+             os.flush();
+             os.close();
+*/
         } catch (SQLException ex) {
             message = "ERROR: " + ex.getMessage();
             ex.printStackTrace();
@@ -107,9 +117,9 @@ public class ImagenServlet extends HttpServlet {
                 }
             }
         }
-          response.setContentType("image/jpeg");
-          request.setAttribute("a", aux);
-         getServletContext().getRequestDispatcher("/newjsp.jsp").forward(request, response);
+        
+          
+        
         
     }
     /*img = rs.getBlob(8);

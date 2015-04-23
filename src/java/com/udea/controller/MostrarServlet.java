@@ -53,9 +53,9 @@ public class MostrarServlet extends HttpServlet {
 
         //int idJugador = Integer.parseInt(request.getParameter("jugador"));
         String idJugador = request.getParameter("jugador");
+       // Blob img;
         Connection conn = null;
         String message = "";
-        byte[] imgData = null;
         ArrayList<Object> lista = null;
         ArrayList<String> sublista = null;
 
@@ -80,7 +80,6 @@ public class MostrarServlet extends HttpServlet {
                     sublista.add(rs.getString(x));
                 }
                 lista.add(sublista);
-
             }
 
         } catch (SQLException ex) {
